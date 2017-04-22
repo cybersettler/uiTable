@@ -1,0 +1,12 @@
+<template class="shadow">
+    <style><%- shadowStyle %></style>
+    <div class="table-responsive">
+      <table class="table"></table>
+    </div>
+</template>
+
+<script>
+    (function(window, document, undefined) {
+        require("websemble").frontend.createComponent('ui-table');
+    })(window, document);
+</script>
