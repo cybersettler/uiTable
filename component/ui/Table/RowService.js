@@ -14,16 +14,15 @@ function renderRows(widget) {
         widget.rows = generateRowsFromModel(widget);
     }
 
-    var table = widget.view.shadowRoot.querySelector('table');
+    var tableBody = widget.view.shadowRoot.querySelector('tbody');
 
     // Update…
-    var p = d3.select(table)
-        .selectAll('tr[data-type=data]')
+    var p = d3.select(tableBody)
+        .selectAll('tr')
         .data(widget.rows);
 
     // Enter…
-    p.enter().append('tr').attr('data-type','data')
-        .call(appendCells);
+    p.enter().append('tr').call(appendCells);
 
     // Exit…
     p.exit().remove();
@@ -32,6 +31,10 @@ function renderRows(widget) {
 }
 
 function appendCells(selection) {
+    if (selection.empty()) {
+        return;
+    }
+
     selection.datum().cells.forEach(function(cell) {
         selection.append('td').attr('style', cell.style).text(cell.html);
     });

@@ -16,14 +16,12 @@ function renderColumns(widget) {
         widget.columns = generateColumnsFromConfig(widget);
     }
 
-    var tableRows = widget.view.shadowRoot.querySelectorAll('tr');
-    var headerRow;
+    var tableHeader = widget.view.shadowRoot.querySelector('thead');
+    var headerRow = tableHeader.querySelector('tr');
 
-    if (tableRows.length === 0) {
+    if (!headerRow) {
         headerRow = document.createElement("tr");
-        widget.view.shadowRoot.querySelector("table").appendChild(headerRow);
-    } else {
-        headerRow = tableRows[0];
+        tableHeader.appendChild(headerRow);
     }
 
     // Update…

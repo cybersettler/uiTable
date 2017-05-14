@@ -182,6 +182,10 @@ function givenEmptyView() {
     var container = document.createElement('div');
     container.classList.add('table-responsive');
     var table = document.createElement('table');
+    var tableHead = document.createElement('thead');
+    var tableBody = document.createElement('tbody');
+    table.appendChild(tableHead);
+    table.appendChild(tableBody);
     container.appendChild(table);
     view.shadowRoot = createShadowRoot();
     view.shadowRoot.appendChild(container);
