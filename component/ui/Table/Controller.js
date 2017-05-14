@@ -34,4 +34,4 @@ function TableController(view, scope) {
   };
 }
 
-module.exports = FormController;
+module.exports = TableController;
