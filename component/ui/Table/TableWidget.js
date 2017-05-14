@@ -17,15 +17,13 @@ function TableWidget(view, scope) {
 }
 
 TableWidget.prototype.render = function() {
-  this.fetchData()
+  return this.fetchData()
       .then(ColumnService.renderColumns)
       .then(RowService.renderRows)
       .then(CellService.renderCells);
 };
 
 TableWidget.prototype.fetchData = function() {
-  var schema;
-  var display;
   var promises = [];
   var widget = this;
 
@@ -41,7 +39,6 @@ TableWidget.prototype.fetchData = function() {
     promises.push(
         this.scope.getSchema().then(function(result) {
           widget.schema = result;
-          widget.data[widget.view.dataset.schema] = result;
         })
     );
   }
@@ -50,7 +47,6 @@ TableWidget.prototype.fetchData = function() {
     promises.push(
         this.scope.getDisplay().then(function(result) {
           widget.display = result;
-          widget.data[widget.view.dataset.display] = result;
         })
     );
   }

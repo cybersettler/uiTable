@@ -66,19 +66,27 @@ function generateColumnsFromCells(widget, cells) {
     var result = [];
     var i;
     for (i = 0 ; i < cells.length ; i++) {
-        addColumnDefinition(cells[i]);
+        var itemModel = widget.model && widget.model[i] ? widget.model[i] : null;
+        addColumnDefinition(cells[i], itemModel);
     }
     return result;
 
     /*
      * Header data may come from the schema
      */
-    function addColumnDefinition(item) {
-        var template = Handlebars.compile(item.dataset.header, widget.data);
+    function addColumnDefinition(item, model) {
+        var template = Handlebars.compile(item.dataset.header);
+        var name = item.dataset.name;
+        var type = widget.schema && widget.schema.properties[name].type ?
+        widget.schema.properties[name].type : 'string';
         var column = {
-            name: item.dataset.name,
-            title: template(),
-            type: widget.schema.type
+            name: name,
+            title: template({
+                display: widget.display,
+                schema: widget.schema,
+                model: model
+            }),
+            type: type
         };
         result.push(column);
     }
@@ -118,8 +126,12 @@ function generateColumnsFromConfig(widget) {
 function appendHeader(selection, widget, fromTemplate) {
     if (fromTemplate) {
         selection.html(function(d) {
-            var template = Handlebars.compile(d.html, widget.data);
-            return template();
+            var template = Handlebars.compile(d.html);
+            return template({
+                display: widget.display,
+                schema: widget.schema,
+                model: widget.model
+            });
         });
     } else {
         selection.text(function(d) {

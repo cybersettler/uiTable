@@ -9,8 +9,6 @@ __Features__:
 
 ## Getting started
 
-## Getting started
-
 Include UI Table in your project dependencies
 (see [websemble generator]
   (https://github.com/cybersettler/generator-websemble/wiki)).
@@ -38,8 +36,6 @@ There are three different ways to determine which columns to
 display and how. Either they are determined from a JSON schema,
 and/or they are determined form a display configuration object,
 or they are specified in the view.
-
-##  From schema
 
 To specify a schema, on your view include the UI table like so:
 
@@ -89,3 +85,19 @@ Also you could specify the order by HTML content, like so:
   ...
 </ui-table>
 ```
+
+Another way to display data is by an html template display:
+
+```html
+<ui-table data-model="/contacts">
+    <tr data-template="row">
+        <td data-header="{{i18n 'contact.lastname'}}">
+            {{model.lastname}}
+        </td>
+        <td data-header="{{i18n 'contact.firstname'}}">
+            {{model.firstname}}
+        </td>
+    </tr>
+</ui-table>
+```
+            

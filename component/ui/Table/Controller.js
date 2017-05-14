@@ -31,15 +31,6 @@ function TableController(view, scope) {
 
   this.render = function() {
     this.tableWidget.render();
-    var controller = this;
-    var tableWidget;
-
-    onFetchData.then(function(result) {
-      tableWidget = result;
-      return scope.getModel();
-    }).then(function(result) {
-      tableWidget.render(model);
-    });
   };
 }
 

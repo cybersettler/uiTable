@@ -22,12 +22,19 @@ function renderRows(widget) {
         .data(widget.rows);
 
     // Enter…
-    p.enter().append('tr[data-type=data]');
+    p.enter().append('tr').attr('data-type','data')
+        .call(appendCells);
 
     // Exit…
     p.exit().remove();
 
     return widget;
+}
+
+function appendCells(selection) {
+    selection.datum().cells.forEach(function(cell) {
+        selection.append('td').attr('style', cell.style).text(cell.html);
+    });
 }
 
 function generateRowsFromTemplate(widget, cells) {
@@ -43,10 +50,13 @@ function generateRowsFromTemplate(widget, cells) {
     }
 
     function generateCell(cellTemplate, model) {
-        widget.data[widget.view.dataset.model] = model;
-        var template = Handlebars.compile(cellTemplate.innerHTML, widget.data);
+        var template = Handlebars.compile(cellTemplate.innerHTML);
         var cell = {
-            html: template(),
+            html: template({
+                display: widget.display,
+                schema: widget.schema,
+                model: model
+            }),
             style: cellTemplate.getAttribute('style')
         };
         return cell;
@@ -69,18 +79,20 @@ function generateRowsFromContent(widget) {
         var cells = item.querySelectorAll('td');
         var j;
         for (j = 0 ; j < cells.length ; j++) {
-            row.cells.push(generateCell(cells[j]));
+            var model = widget.model && widget.model[i] ? widget.model[i] : null;
+            row.cells.push(generateCell(cells[j], model));
         }
         result.push(row);
     }
 
-    function generateCell(cellTemplate) {
-        if (widget.model) {
-            widget.data[widget.view.dataset.model] = widget.model[i];
-        }
-        var template = Handlebars.compile(cellTemplate.innerHTML, widget.data);
+    function generateCell(cellTemplate, model) {
+        var template = Handlebars.compile(cellTemplate.innerHTML);
         var cell = {
-            html: template(),
+            html: template({
+                display: widget.display,
+                schema: widget.schema,
+                model: model
+            }),
             style: cellTemplate.getAttribute('style')
         };
         return cell;
@@ -96,7 +108,9 @@ function generateRowsFromModel(widget) {
         };
 
         function addCell(column) {
-            return model[column.name];
+            return {
+                html: model[column.name]
+            };
         }
 
         return row;
