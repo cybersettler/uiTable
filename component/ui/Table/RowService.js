@@ -35,8 +35,13 @@ function appendCells(selection) {
         return;
     }
 
-    selection.datum().cells.forEach(function(cell) {
-        selection.append('td').attr('style', cell.style).text(cell.html);
+    selection.selectAll("td")
+    .data(function(d) { return d.cells; })
+    .enter().append("td")
+    .attr('style', function(d) {
+      return d.style;
+    }).html(function(d) {
+      return d.html;
     });
 }
 
