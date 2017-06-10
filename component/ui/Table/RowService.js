@@ -116,9 +116,19 @@ function generateRowsFromModel(widget) {
         };
 
         function addCell(column) {
+          if (column.cellTemplate) {
+            var template = Handlebars.compile(column.cellTemplate);
             return {
-                html: model[column.name]
+              html: template({
+                  display: widget.display,
+                  schema: widget.schema,
+                  model: model
+              })
             };
+          }
+          return {
+            html: model[column.name]
+          };
         }
 
         return row;
