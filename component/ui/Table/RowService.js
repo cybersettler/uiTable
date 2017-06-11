@@ -19,7 +19,9 @@ function renderRows(widget) {
     // Update…
     var p = d3.select(tableBody)
         .selectAll('tr')
-        .data(widget.rows);
+        .data(widget.rows, function(d) {
+          return d.id;
+        });
 
     // Enter…
     p.enter().append('tr').call(appendCells);
@@ -114,6 +116,13 @@ function generateRowsFromModel(widget) {
         var row = {
             cells: widget.columns.map(addCell)
         };
+
+        if (widget.display
+          && widget.display.row
+          && widget.display.row.id
+        ) {
+          row.id = model[widget.display.row.id];
+        }
 
         function addCell(column) {
           if (column.cellTemplate) {
