@@ -100,4 +100,26 @@ Another way to display data is by an html template display:
     </tr>
 </ui-table>
 ```
-            
+## API
+
+### data-model
+
+List of items to display in the table.
+
+### data-schema
+
+Data structure of the model item.
+
+### data-display
+
+Display configuration of the table. The display object supports the following options:
+
+* __styleClass__ (enum: default | striped | bordered | hover | condensed ): defines the table style.
+* __columns__ (array): Determines the columns to display and the order.
+The items may be strings or objects. The string value must match
+the name of a specified schema property.
+  - __name__ (string): Name of the property.
+  - __title__ (string): Text to display as column title.
+  - __cellTemplate__ (string): HTML string to use as template.
+* __row__ (object): Row configuration.
+  - __id__ (string): Field to use as id of the row.

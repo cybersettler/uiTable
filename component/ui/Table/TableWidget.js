@@ -18,6 +18,7 @@ function TableWidget(view, scope) {
 
 TableWidget.prototype.render = function() {
   return this.fetchData()
+      .then(renderTable)
       .then(ColumnService.renderColumns)
       .then(RowService.renderRows)
       .then(CellService.renderCells);
@@ -55,5 +56,17 @@ TableWidget.prototype.fetchData = function() {
     return widget;
   });
 };
+
+function renderTable(widget) {
+  if (widget.display && widget.display.styleClass) {
+    var table = widget.view.shadowRoot.querySelector('table');
+    widget.display.styleClass.split(',').map(function(item) {
+      return 'table-' + item.trim();
+    }).forEach(function(item) {
+      table.classList.add(item);
+    });
+  }
+  return widget;
+}
 
 module.exports = TableWidget;
