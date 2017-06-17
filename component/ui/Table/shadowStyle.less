@@ -240,6 +240,10 @@ table {
 // Place a non-bordered `.table` within a panel (not within a `.panel-body`) and
 // watch it go full width.
 
+:host(.table-border-top) > .table-responsive {
+  border-top: 1px solid @table-border-color;
+}
+
 :host-context(.panel) {
   > .table,
   > .table-responsive > .table,
@@ -294,9 +298,6 @@ table {
         }
       }
     }
-  }
-  > .table-border-top {
-    border-top: 1px solid @table-border-color;
   }
   > .table > tbody:first-child > tr:first-child th,
   > .table > tbody:first-child > tr:first-child td {

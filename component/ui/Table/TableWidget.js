@@ -67,18 +67,7 @@ function renderTable(widget) {
     });
   }
 
-  if (isPanelBodySibling(widget)) {
-    let tableWrapper = widget.view.shadowRoot.querySelector('.table-responsive');
-    tableWrapper.classList.add('table-border-top');
-  }
-  
   return widget;
-}
-
-function isPanelBodySibling(widget) {
-  var parentNode = widget.view.parentNode;
-  return parentNode && parentNode.classList.contains('.panel')
-  && parentNode.querySelector('.panel-body + ui-table');
 }
 
 module.exports = TableWidget;
