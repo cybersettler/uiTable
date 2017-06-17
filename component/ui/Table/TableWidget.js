@@ -59,14 +59,26 @@ TableWidget.prototype.fetchData = function() {
 
 function renderTable(widget) {
   if (widget.display && widget.display.styleClass) {
-    var table = widget.view.shadowRoot.querySelector('table');
+    let table = widget.view.shadowRoot.querySelector('table');
     widget.display.styleClass.split(',').map(function(item) {
       return 'table-' + item.trim();
     }).forEach(function(item) {
       table.classList.add(item);
     });
   }
+
+  if (isPanelBodySibling(widget)) {
+    let tableWrapper = widget.view.shadowRoot.querySelector('.table-responsive');
+    tableWrapper.classList.add('table-border-top');
+  }
+  
   return widget;
+}
+
+function isPanelBodySibling(widget) {
+  var parentNode = widget.view.parentNode;
+  return parentNode && parentNode.classList.contains('.panel')
+  && parentNode.querySelector('.panel-body + ui-table');
 }
 
 module.exports = TableWidget;
