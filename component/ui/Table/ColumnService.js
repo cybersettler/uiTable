@@ -1,5 +1,4 @@
 const d3 = require('d3');
-const Handlebars = require('Handlebars');
 const i18next = require('i18next');
 
 function renderColumns(widget) {
@@ -73,7 +72,7 @@ function generateColumnsFromCells(widget, cells) {
      * Header data may come from the schema
      */
     function addColumnDefinition(item, model) {
-        var template = Handlebars.compile(item.dataset.header);
+        var template = widget.scope.templateEngine.compile(item.dataset.header);
         var name = item.dataset.name;
         var type = widget.schema && widget.schema.properties[name].type ?
         widget.schema.properties[name].type : 'string';
@@ -124,7 +123,7 @@ function generateColumnsFromConfig(widget) {
 function appendHeader(selection, widget, fromTemplate) {
     if (fromTemplate) {
         selection.html(function(d) {
-            var template = Handlebars.compile(d.html);
+            var template = widget.scope.templateEngine.compile(d.html);
             return template({
                 display: widget.display,
                 schema: widget.schema,

@@ -1,5 +1,4 @@
 const d3 = require('d3');
-const Handlebars = require('Handlebars');
 
 function renderRows(widget) {
     var rowTemplate = widget.view.querySelector('tr[data-template=row]');
@@ -60,7 +59,7 @@ function generateRowsFromTemplate(widget, cells) {
     }
 
     function generateCell(cellTemplate, model) {
-        var template = Handlebars.compile(cellTemplate.innerHTML);
+        var template = widget.scope.templateEngine.compile(cellTemplate.innerHTML);
         var cell = {
             html: template({
                 display: widget.display,
@@ -96,7 +95,7 @@ function generateRowsFromContent(widget) {
     }
 
     function generateCell(cellTemplate, model) {
-        var template = Handlebars.compile(cellTemplate.innerHTML);
+        var template = widget.scope.templateEngine.compile(cellTemplate.innerHTML);
         var cell = {
             html: template({
                 display: widget.display,
@@ -126,7 +125,7 @@ function generateRowsFromModel(widget) {
 
         function addCell(column) {
           if (column.cellTemplate) {
-            var template = Handlebars.compile(column.cellTemplate);
+            var template = widget.scope.templateEngine.compile(column.cellTemplate);
             return {
               html: template({
                   display: widget.display,

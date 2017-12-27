@@ -43,6 +43,15 @@ describe('TableWidget', function () {
                 });
                 done(err);
             });
+            scope.templateEngine = {
+                render: function(template, data) {
+                    var doRender = Handlebars.compile(template);
+                    return doRender(data);
+                },
+                compile: function(template) {
+                    return Handlebars.compile(template);
+                }
+            };
         });
         beforeEach(function () {
             model = null;

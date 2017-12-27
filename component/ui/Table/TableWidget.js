@@ -1,5 +1,4 @@
 const d3 = require('d3');
-const Handlebars = require('Handlebars');
 const i18next = require('i18next');
 const ColumnService = require('./ColumnService.js');
 const RowService = require('./RowService.js');
